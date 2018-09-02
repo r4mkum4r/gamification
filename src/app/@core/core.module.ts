@@ -36,7 +36,6 @@ export class NbSimpleRoleProvider extends NbRoleProvider {
 export const NB_CORE_PROVIDERS = [
   ...DataModule.forRoot().providers,
   ...NbAuthModule.forRoot({
-
     strategies: [
       NbDummyAuthStrategy.setup({
         name: 'email',
@@ -68,31 +67,30 @@ export const NB_CORE_PROVIDERS = [
   }).providers,
 
   {
-    provide: NbRoleProvider, useClass: NbSimpleRoleProvider,
+    provide: NbRoleProvider,
+    useClass: NbSimpleRoleProvider,
   },
   AnalyticsService,
 ];
 
 @NgModule({
-  imports: [
-    CommonModule,
-  ],
-  exports: [
-    NbAuthModule,
-  ],
+  imports: [CommonModule],
+  exports: [NbAuthModule],
   declarations: [],
 })
 export class CoreModule {
-  constructor(@Optional() @SkipSelf() parentModule: CoreModule) {
+  constructor(
+    @Optional()
+    @SkipSelf()
+    parentModule: CoreModule
+  ) {
     throwIfAlreadyLoaded(parentModule, 'CoreModule');
   }
 
   static forRoot(): ModuleWithProviders {
     return <ModuleWithProviders>{
       ngModule: CoreModule,
-      providers: [
-        ...NB_CORE_PROVIDERS,
-      ],
+      providers: [...NB_CORE_PROVIDERS],
     };
   }
 }

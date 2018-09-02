@@ -4,6 +4,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import {
+  NbInputModule,
+  NbAlertModule,
   NbActionsModule,
   NbCardModule,
   NbLayoutModule,
@@ -33,13 +35,7 @@ import {
   TinyMCEComponent,
   ThemeSwitcherListComponent,
 } from './components';
-import {
-  CapitalizePipe,
-  PluralPipe,
-  RoundPipe,
-  TimingPipe,
-  NumberWithCommasPipe,
-} from './pipes';
+import { CapitalizePipe, PluralPipe, RoundPipe, TimingPipe, NumberWithCommasPipe } from './pipes';
 import {
   OneColumnLayoutComponent,
   SampleLayoutComponent,
@@ -50,9 +46,13 @@ import { DEFAULT_THEME } from './styles/theme.default';
 import { COSMIC_THEME } from './styles/theme.cosmic';
 import { CORPORATE_THEME } from './styles/theme.corporate';
 
+// import { EGEInputDirective } from './directives/input/input.directive';
+
 const BASE_MODULES = [CommonModule, FormsModule, ReactiveFormsModule];
 
 const NB_MODULES = [
+  NbInputModule,
+  NbAlertModule,
   NbCardModule,
   NbLayoutModule,
   NbTabsetModule,
@@ -86,24 +86,18 @@ const COMPONENTS = [
   TwoColumnsLayoutComponent,
 ];
 
-const ENTRY_COMPONENTS = [
-  ThemeSwitcherListComponent,
-];
+const ENTRY_COMPONENTS = [ThemeSwitcherListComponent];
 
-const PIPES = [
-  CapitalizePipe,
-  PluralPipe,
-  RoundPipe,
-  TimingPipe,
-  NumberWithCommasPipe,
-];
+const PIPES = [CapitalizePipe, PluralPipe, RoundPipe, TimingPipe, NumberWithCommasPipe];
+
+// const DIRECTIVES = [EGEInputDirective];
 
 const NB_THEME_PROVIDERS = [
   ...NbThemeModule.forRoot(
     {
-      name: 'cosmic',
+      name: 'default',
     },
-    [ DEFAULT_THEME, COSMIC_THEME, CORPORATE_THEME ],
+    [DEFAULT_THEME, COSMIC_THEME, CORPORATE_THEME]
   ).providers,
   ...NbSidebarModule.forRoot().providers,
   ...NbMenuModule.forRoot().providers,
