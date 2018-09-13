@@ -1,3 +1,16 @@
-<p>
-  production-bugs works!
-</p>
+<div class="bugs">
+  <nb-card [nbSpinner]="loading" nbSpinnerStatus="info" size="medium">
+    <nb-card-header>
+      <div>Production bugs</div>
+      <div>Total bugs solved: {{bugs.issues.length}}</div>
+    </nb-card-header>
+    <nb-card-body>
+      <nb-list>
+        <nb-list-item *ngFor="let bug of bugs.issues">
+          {{bug.key}} - {{bug.fields.customfield_15011.displayName}}
+        </nb-list-item>
+      </nb-list>
+    </nb-card-body>
+    <nb-card-footer>User-Management: Vyom</nb-card-footer>
+  </nb-card>
+</div>

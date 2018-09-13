@@ -7,13 +7,17 @@ import { JIRABugsService } from '../../../services/jira/jira-bugs.service';
   styleUrls: ['./production-bugs.component.scss'],
 })
 export class ProductionBugsComponent implements OnInit {
-  bugs: any = [];
+  bugs: any = {
+    issues: [],
+  };
+  loading: Boolean = true;
 
   constructor(private jiraBugs: JIRABugsService) {}
 
   ngOnInit() {
     this.jiraBugs.getProductionBugs().subscribe((bugs) => {
-      this.bugs = bugs;
+      this.loading = false;
+      this.bugs = bugs[0];
     });
   }
 }

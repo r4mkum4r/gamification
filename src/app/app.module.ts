@@ -22,7 +22,6 @@ import { EGELoginComponent } from './auth/login/login.component';
 import { EGEAuthComponent } from './auth';
 import { FormsModule } from '@angular/forms';
 import { ServicesModule } from './services/services-module';
-
 @NgModule({
   declarations: [AppComponent, EGELoginComponent, EGEAuthComponent],
   imports: [

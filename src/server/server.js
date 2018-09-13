@@ -35,22 +35,51 @@ app.post('/login', (req, res, next) => {
 });
 
 app.post('/production-bugs', (req, res, next) => {
-  const jira = new JiraClient({
-    host: 'jira.expedia.biz',
-    basic_auth: {
-      base64: req.body.token
-    },
-  });
-
-  jira.search.search({
-    jql: 'project=EGE AND issuetype= Bug AND "Production Issue" = Yes  AND status changed TO Resolved BY currentUser()'
-  }).then((response) => {
-    res.status(200).send(response);
+  getAllProdBugs(req.body.token).then(function (bugs) {
+    res.status(200).send(bugs);
     next();
-  }, (error) => {
+  }, function (error) {
     res.send(error);
   });
 });
+
+function getAllProdBugs(token) {
+  return new Promise((resolve, reject) => {
+    let bugs = [];
+    getBugs(token, bugs, (err, allBugs) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(allBugs);
+      }
+    })
+  });
+}
+
+function getBugs(token, bugs, callback) {
+  const jira = getJIRAClient(token);
+
+  jira.search.search({
+    jql: 'project=EGE AND issuetype = Bug AND "Production Issue" = Yes  AND status changed TO Resolved BY ("akalam", "raramakrishna", "rgrover", "risharma", "yagoyal", "schugh", "anechawla", "ttewari") AFTER startOfYear()',
+    timeout: 100000
+  }).then((response) => {
+    bugs.push(response);
+    callback(null, bugs);
+  }, (error) => {
+    callback(error);
+  });
+}
+
+function getJIRAClient(token) {
+  const jira = new JiraClient({
+    host: 'jira.expedia.biz',
+    basic_auth: {
+      base64: token
+    },
+  });
+
+  return jira;
+}
 
 // Create a Server
 let server = app.listen(4201, function () {

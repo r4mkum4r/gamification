@@ -13,6 +13,7 @@
     "btoa": "^1.2.1",
     "express": "^4.16.3",
     "jira-client": "^6.4.1",
-    "jira-connector": "^2.8.0"
+    "jira-connector": "^2.8.0",
+    "rxjs": "^6.3.1"
   }
 }
